@@ -1,4 +1,4 @@
-theme: jekyll-theme-serial-programmer
+theme: https://github.com/sharadcodes/jekyll-theme-serial-programmer
 title: Gabriel Notte - 'Emergency Call' PORTFOLIO
 description: Portfolio containiny my work on 'Emergency Call'
 markdown: GFM
