@@ -1,4 +1,6 @@
-
+plugins:
+  - jekyll-remote-theme
+  
 remote_theme: https://github.com/sharadcodes/jekyll-theme-serial-programmer
 title: Gabriel Notte - 'Emergency Call' PORTFOLIO
 description: Portfolio containiny my work on 'Emergency Call'
