@@ -30,39 +30,11 @@
 <div class="text_block">
 
 <div class="text_title">
-<center><strong>THIS IS THE SECOND PAGE</strong></center>
+<center><strong>SEQUENCES AND TRIGGERS</strong></center>
 </div>
 
 <div class="text_intro">
-<center><strong>HELLO AND WELCOME</strong><br></center>
-This portfolio contains all of my work and contributions to the game "Emergency Call".
-
-Thank you for taking interest in my work, and I hope that what I have displayed here peaks your interest!
-</div>
-</div>
-</div>
-
-<div class = "image_block">
-    <div  class = "image_block_color">
-<div class="text_block">
-
-<div class="text_title">
-<center><strong>CONTENT</strong></center>
-</div>
-
-<div class="text_intro">
-<center>
-Here's a complete list of everything I have produced for this project.<br><strong>Click on any name to reach a page detailing how it works.</strong>
-</center>
-<br>
-<li> <strong><u>SEQUENCES and TRIGGERS</u>:</strong> <i>The core of our Gameplay Loop.</i>
-<li> <strong><u>DYNAMO FLASHLIGHT</u>:</strong> <i>Our KEY FEATURE, and the player's only defense.</i>
-<li> <strong><u>INTERACTABLE OBJECTS</u>:</strong> <i>Everything players can interact with.</i>
-<li> <strong><u>NPCs and NARRATION</u>:</strong> <i>The CHALLENGE we imposed on ourselves for an added "cool factor".</i>
-<li> <strong><u>ENEMIES</u>:</strong> <i>The behavior of the various dangers lurking around our Game.</i>
-<li> <strong><u>SAVE SYSTEM</u>:</strong> <i>Allows us to be more ambitious with the length of our game by letting us easily test and retry sections.</i>
-<li> <strong><u>DITHERED LIGHTING and POST PROCESSING</u>:</strong> <i>Extra visuals, used for ambiance and player feedback.</i>
-</div>
+This system is the  <strong>back bone</strong> of our Game. Every single <strong>scripted</strong> sequence in our game depends on this system in some way, shape or form.
 </div>
 </div>
 </div>
@@ -71,21 +43,190 @@ Here's a complete list of everything I have produced for this project.<br><stron
 <div class="text_block">
 
 <div class="text_title">
-<center><strong>ABOUT ME</strong><br></center>
+<strong>TRIGGER:</strong> Activation Logic
 </div>
 
 <div class="text_intro">
-I'm a passionate <strong>Gameplay Programmer</strong>, currently working on a few personal projects and ideas. 
+<table class="diagram">
+<tr>
+<td class="diagram">
+<center>
+<img class="diagram" src="diagrams/sequences/trigger.png" alt="Trigger Activation Diagram" width=auto height=auto>
+</center>
+</td>
+<td class="diagram">
+    <p>
+        Every trigger in the game inherits this loop.
+    </p>
+    <p>
+        Each trigger in game can be given an undefined amount of  <strong>FLAGS</strong> and <strong>CONDITIONS</strong> that need to be met before it is allowed to fire.
+    </p>
+    <p>
+        Here, we start by verifying that every required <strong>FLAG</strong> and <strong>CONDITION</strong> is met. Then, we check if the  <strong>TRIGGER TYPE</strong> matches the way we are attempting to Trigger it.
+    </p>
 
-My <strong>life goal</strong> has been to <strong>create games</strong> and other content for others to enjoy <strong>since I was 7</strong>, and I'm doing everything in my power to make it happen. I originally started creating small games and projects by modding various Games and Apps, which lead to me enjoying the <strong>technical</strong> and <strong>problem solving</strong> aspects of Game Development a LOT more than any other aspect.
+    <p>
+        The possible types are:
+        <strong>
+        <ul>
+        <li> On Start </li>
+        <li> On Collision Enter </li>
+        <li> On Enabled </li>
+        <li> On Sequence </li>
+        </ul>
+        </strong>
+    </p>
 
-I take <strong></strong>pride in <strong></strong>trying my best to make my <strong>work</strong> as <strong>clean</strong>, <strong>optimized</strong>, <strong>modular</strong>, and <strong>accessible</strong> as possible. I also enjoy <strong>learning</strong> better ways to do what I already can do. I take every single project I work on <strong>very seriously</strong>, making it my <strong>personal mission</strong> to put as much <strong>effort</strong> and <strong>love</strong> into them as possible to make them into the best possible versions of what they can possibly become.
+    <p>
+        For the last Type, Triggers can be given a <strong>KEY</strong> <i>(string)</i> used by <strong>SequenceObjects</strong> to activate Triggers manually.
+        <br> Triggers can also Instantiate SequenceObjects, allowing for the creation of Chained Sequences.
+    </p>
+</td>
+</tr>
+</table>
 
-<i>Need more info? You can contact me if you have any questions or would like to reach out.</i>
+
+    <p>
+        After all of this, we verify if the trigger is set to "Only Trigger Once". If so, we also check if it was already triggered.
+    </p>
+    <p>
+        Once <i>all</i> of those checks are passed, we write potential <strong>PROGRESSION FLAGS</strong> into the Save Data, we mark the Trigger as "Triggered", and only then do we run the main <strong>Trigger</strong> Function.
+    </p>
 
 </div>
 </div>
+</div>
 
+<div class = "block">
+<div class="text_block">
+
+<div class="text_title">
+<strong>SEQUENCE OBJECT:</strong> Lifecycle
+</div>
+
+<div class="text_intro">
+<table class="diagram">
+<tr>
+<td class="diagram">
+<center>
+<img class="diagram" src="diagrams/sequences/sequence.png" alt="SequenceObject Diagram" width=auto height=auto>
+</center>
+</td>
+<td class="diagram">
+    <p>
+        <strong>Dialogues</strong>, <strong>Cutscenes</strong>, NPC Actions, object <strong>Animations</strong>, environmental changes, and every other scripted parts of our game go through this Logic Loop.
+    </p>
+    <p>
+        This system allows us precise control over the length and timings of every game sequence thanks to my use of <strong>Animation Clips</strong> and <strong>Animators</strong> to handle our <strong>Sequences</strong>.
+        This choice lets us create and add new sequences to the game in an <strong>INTUITIVE</strong> and <strong>EFFICIENT</strong> way. 
+    </p>
+    <p>
+        The logic loop present here resides in <strong>PREFAB</strong> Objects that are instantiated when needed.
+    </p>
+
+    <p>
+        Before a sequence runs, we tell the game that a sequence is about to run by setting the '<i>Game.isInCutscene</i>' boolean to True.
+        This allows us to prevent certain actions from happening during longer Sequences, and it allows us to add Invisible Walls in certain areas
+        to prevent players from getting lost.
+    </p>
+</td>
+</tr>
+</table>
+
+
+    <p>
+        Once the pre-run logic is done, an <strong>Animator</strong> attached to the <strong>SequenceObject</strong> runs an <strong>Animation Clip</strong> defined in advance. This animation clip runs
+        various <strong>Triggers</strong> and <strong>Functions</strong> used to run Cutscenes, dictate NPC Behaviors, and other things listed lower on this page.
+    </p>
+    <p>
+        As soon as the animation comes to an end, we make sure that the Player has been given back its ability to <strong>Move</strong> and to <strong>Look Around</strong>, as Sequences
+        may remove both of those abilities if necessary. We then set '<i>Game.isInCutscene</i>' back to False to tell the game that the Sequence is done, and we <strong>Destroy</strong> the GameObject holding the SequenceObject to not leave
+        unnecessary objects lingering in the Game Scene.
+    </p>
+
+</div>
+</div>
+</div>
+
+<div class = "block">
+<div class="text_block">
+
+<div class="text_title">
+<strong>SEQUENCE OBJECT:</strong> Events & Calls
+</div>
+
+<div class="text_intro">
+
+    <p>
+        During a sequence, multiple Functions are called to execute cetains actions with precise definable timings.
+        Those Functions are called during the '<strong>RUN VARIOUS TRIGGERS AND FUNCTIONS</strong>' loop on the previous Diagram just above.
+    </p>
+    <p>
+        Here is a complete list of every Action that can be executed by a <strong>SequenceObject</strong> during its lifecycle:
+    </p>
+    <ul>
+        <li><strong>SET CAMERA CONTROL</strong></li> Used to allow or disallow players to Move and Look Around.
+        <li><strong>SET PLAYER POSITION</strong></li> Moves the player to a predefined position using a TRANSFORM present in the level.
+        <li><strong>START ANIMATOR SEQUENCE</strong></li> Forces a defined Animator to play a specific Animation Clip.
+        <li><strong>SET DIALOGUE</strong></li> Defines the Dialogue Object that gets used for this specific Sequence. This function MUST be ran before any dialogue is called, as it contains every line that needs to be said.
+        <li><strong>SET DIALOGUE ENTRY</strong></li> Runs a specific line from a Dialogue Object, plays a Sound to go with it, and places Subtitles on the screen.
+        <li><strong>SET TRIGGER</strong></li> Runs a TRIGGER Object manually. Said trigger must be set to the "On Sequence" trigger type for it to be called by a SequenceObject.
+        <li><strong>SET OBJECTIVE</strong></li> Changes the current objective of the player, and makes it appear on the screen.
+        <li><strong>SET PROGRESSION</strong></li> Writes a Progression Flag in the Save Data.
+        <li><strong>SET CONTROL PROMPT</strong></li> Prompts the player to do an action in game, e.g. pressing a key.
+        <li><strong>PLAY SOUND</strong></li> Plays a sound from a SoundElement.
+    </ul>
+
+</div>
+</div>
+</div>
+
+<div class = "block">
+<div class="text_block">
+
+<div class="text_title">
+<strong>SEQUENCE OBJECT & TRIGGERS:</strong> Modularity and Accessibility
+</div>
+
+<div class="text_intro">
+    <p>
+        Each and every system used to progress Game Sequences and to dictate the actions of interactive elements around the player are simple by Design, 
+        as they were made to be extremely modular and easy to pick up in the long run, even by someone who isn't used to Programming.
+    </p>
+<table class="diagram">
+<tr>
+<td class="diagram">
+<center>
+<img class="diagram" style="width: 75%" src="images/TriggerList.png" alt="SequenceObject Diagram" width=auto height=auto>
+</center>
+</td>
+<td class="diagram">
+    <p>
+        Each individual Trigger class only took a few minutes at most to be written; most of the work was already handled instantiated
+        inside of the TriggerBase parent class, and I only had to make each variant inherit it and write their final "TRIGGER" method.
+    </p>
+    <p>
+        In certain cases, the Functions I needed already existed in other systems and scripts, allowing me to simply call those instead without
+        even requiring any extra work from me.
+    </p>
+    <p>
+        These choices let me easily create a ton of new Trigger types without losing any time, even during the Implementation phase of our game
+        depending on the wants and needs of the rest of the team.
+    </p>
+</td>
+</tr>
+</table>
+
+
+    <p>
+        In the case of <strong>SequenceObjects</strong>, everything is contained within the SequenceObject Script itself, which only needs to be called inside of a <strong>PREFAB</strong>. 
+    </p>
+    <p>
+        The creation of new sequences is thus <strong>trivial</strong> from a technical stand point and accessible to every member of our team, as it only requires us to create AnimationClips.
+    </p>
+
+</div>
+</div>
 </div>
 
 <div class="header_block">
@@ -120,7 +261,7 @@ I take <strong></strong>pride in <strong></strong>trying my best to make my <str
     .text_top_line1 {
         color:orange;
         font-size:36px;
-        margin: 0 0 -10px 30px;
+        margin: 0 0 0px 30px;
     }
     .text_top_line2 {
         color:red;
@@ -134,7 +275,7 @@ I take <strong></strong>pride in <strong></strong>trying my best to make my <str
         margin: -20px 0 0 0
     }
     .text_intro {
-        font-size: 16px;
+        font-size: 18px;
     }
     .image_block {
         background-image: url(images/background.png);
@@ -167,6 +308,20 @@ I take <strong></strong>pride in <strong></strong>trying my best to make my <str
         margin: 0 15% 0 15%;
         background-color: #151221cb;
         border-radius: 50px;
+        line-height: 1.3;
+    }
+    .diagram {
+
+        border-radius: 25px;
+        vertical-align: top;
+        table-layout: fixed;
+        width: 100%;
+        text-align: justify;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        color: #ff7b64;
+        font-size: 18px;
+        line-height: 1.3;
+        padding: 0 2%;
     }
     strong{
         color: #ffc061;
