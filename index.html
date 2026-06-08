@@ -1,4 +1,5 @@
 
+<div class="header_block">
 <div class="header-1">
 <table>
 <tr>
@@ -23,6 +24,7 @@
 </tr>
 </table>
 </div>
+</div>
 
 <div class="text_block">
 
@@ -38,6 +40,7 @@ Thank you for taking interest in my work, and I hope that what I have displayed 
 </div>
 </div>
 
+<div class = "image_block">
 <div class="text_block">
 
 <div class="text_title">
@@ -56,6 +59,7 @@ Here's a complete list of everything I have produced for this project.<br>Click 
 <li> <strong>ENEMIES:</strong> <i>The behavior of the various dangers lurking around our Game.</i>
 <li> <strong>SAVE SYSTEM:</strong> <i>Allows us to be more ambitious with the length of our game by letting us easily test and retry sections.</i>
 <li> <strong>DITHERED LIGHTING and POST PROCESSING:</strong> <i>Extra visuals, used for ambiance and player feedback.</i>
+</div>
 </div>
 </div>
 
@@ -92,15 +96,12 @@ I take <strong></strong>pride in <strong></strong>trying my best to make my <str
 
 <style>
    body {
-        background-image: url(images/background.png);
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-size: cover;
-        background-position: center;
+        background-color: rgb(0, 0, 0);
+        padding: 0;
+        margin: 0;
     }
     .header-1 {
-        border-radius: 50px;
-        background-color: #151221cb;
+        border-radius: 50px; 
         margin: 10px 15%;
     }
     .logo_top {
@@ -129,9 +130,19 @@ I take <strong></strong>pride in <strong></strong>trying my best to make my <str
     .text_intro {
         font-size: 16px;
     }
-    .block {
-        background-color: black;
+    .image_block {
+        background-image: url(images/background.png);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
         padding: 25px 0;
+    }
+    .block {
+        padding: 25px 0;
+    }
+    .header_block {
+        background-color: #151221;
     }
     .text_block {
         text-align: justify;
