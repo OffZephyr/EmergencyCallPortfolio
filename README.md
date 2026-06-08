@@ -1,6 +1,72 @@
-# EMERGENCY CALL
+<table class="header-1">
+<tr>
+<td>
 
-<img src="images/logo.png" alt="game logo" width="200"/>
+<center>
+<img class="logo_top" src="images/logo.png" alt="Logo" width="200" height=auto>
+</center>
 
-<span style="color:blue">skibid</span>
-skibidi
+</td>
+<td class = "text_top">
+<p style="color:orange; font-size:36px; margin: 10px 0 -10px 20px">
+<strong>"YOU CALLED, WE ANSWERED!</strong>
+</p>
+
+<p style="color:red; font-size:25px; margin: 0 0 20px 20px">
+<i>BUT... MAYBE WE SHOULDN'T HAVE..."</i>
+</p>
+
+</td>
+</tr>
+</table>
+
+<div class="text_block">
+
+<div class="text_title">
+<center><strong>GABRIEL NOTTE - 'Emergency Call' PORTFOLIO</strong></center>
+</div>
+
+<div class="text_intro">
+<center><strong>Hello!</strong><br></center>
+This portfolio contains all of my work and contributions to the game "Emergency Call".
+</div>
+
+</div>
+
+</body>
+
+<style>
+   body {
+        background-image: url(images/background.png);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+    }
+    .header-1 {
+        background-color: #160a0e;
+        width: 100%;rgb(9, 7, 7)
+    }
+    .logo_top {
+        display: block;
+        margin: 0 -40px;
+    }
+    .text_top {
+        background-color: #2d171f;
+    }
+
+    .text_title {
+        font-size: 24px;
+        padding: 0 0 40px 0;
+    }
+    .text_intro {
+        font-size: 16px;
+    }
+    .text_block {
+        text-align: justify;
+        font-size: 12px;
+        padding: 50px 200px;
+        margin: 50px 0 0 0;
+        background-color: #2d171f;
+    }
+</style>
