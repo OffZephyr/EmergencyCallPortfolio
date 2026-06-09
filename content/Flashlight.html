@@ -1,0 +1,359 @@
+
+<div class="header_block">
+<div class="header-1">
+<table>
+<tr>
+<td>
+
+<center>
+<img class="logo_top" src="images/logo.png" alt="Logo" width="200" height=auto>
+</center>
+
+</td>
+<td class = "text_top">
+
+<p class = "text_top_line1">
+<strong>"YOU CALLED, WE ANSWERED!</strong>
+</p>
+
+<p class = "text_top_line2">
+<i>BUT... MAYBE WE SHOULDN'T HAVE..."</i>
+</p>
+
+<p>
+<a href="https://offzephyr.github.io/EmergencyCallPortfolio" class="header_link">GABRIEL NOTTE - 'Emergency Call' PORTFOLIO</a>
+</p>
+
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div class = "block">
+<div class="text_block">
+
+<div class="text_title">
+<center><strong>DYNAMO FLASHLIGHT</strong></center>
+</div>
+
+<div class="text_intro">
+This is our Key Feature, the Player's best tool for visibility, and its only way to defend itself from what lurks in the dark...
+</div>
+</div>
+</div>
+
+<div class = "block">
+<div class="text_block">
+
+<div class="text_title">
+<strong>DYNAMO:</strong> Battery
+</div>
+
+<div class="text_intro">
+<table class="diagram">
+<tr>
+<td class="diagram">
+<center>
+<img class="diagram" src="diagrams/sequences/flashlight_battery.png" alt="Trigger Activation Diagram">
+</center>
+</td>
+<td class="diagram">
+    <p>
+        The battery goes through a few check before deciding if it should be draining or not.
+    </p>
+    <p>
+        We start by verifying that it's actually <strong>toggled ON</strong>. It wouldn't make much sense to drain the battery while it's turned OFF.
+    </p>
+    <p>
+        If the flashlight is <strong>ENABLED</strong>, we then check if the player is currently recharging its flashlight. If that is the case, we simply add to the current amount of battery,
+        pulse the luminosity of the flashlight to mimic Dynamos in real life, and rotate the Hand Crank.
+    </p>
+</td>
+</tr>
+</table>
+
+
+    <p>
+        If the battery is NOT actively being recharged by the player, we verify that they aren't <strong>charging a FLASH</strong>. We then freeze the battery if they are.<br>
+       Then, if all of the flags listed above are set, we <strong>DRAIN</strong> the battery at a set speed, defined by a <strong>Serialized Field</strong> on the Flashlight object.
+    </p>
+    <p>
+        While the <strong>BATTERY</strong> is being <strong>DRAINED</strong>, we also update the <strong>LUMINOSITY</strong> of the <strong>FLASHLIGHT</strong>, as well as the battery indicator on the Player's CURSOR at the center of the screen.
+    </p>
+
+</div>
+</div>
+</div>
+
+<div class = "block">
+<div class="text_block">
+
+<div class="text_title">
+<strong>SEQUENCE OBJECT:</strong> Lifecycle
+</div>
+
+<div class="text_intro">
+<table class="diagram">
+<tr>
+<td class="diagram">
+<center>
+<img class="diagram" src="diagrams/sequences/flashlight_flash.png" alt="Trigger Activation Diagram" style="width:115% ;margin-left: -50px">
+</center>
+</td>
+<td class="diagram">
+    <p>
+        <strong>Dialogues</strong>, <strong>Cutscenes</strong>, NPC Actions, object <strong>Animations</strong>, environmental changes, and every other scripted parts of our game go through this Logic Loop.
+    </p>
+    <p>
+        This system allows us precise control over the length and timings of every game sequence thanks to my use of <strong>Animation Clips</strong> and <strong>Animators</strong> to handle our <strong>Sequences</strong>.
+        This choice lets us create and add new sequences to the game in an <strong>INTUITIVE</strong> and <strong>EFFICIENT</strong> way. 
+    </p>
+    <p>
+        The logic loop present here resides in <strong>PREFAB</strong> Objects that are instantiated when needed.
+    </p>
+
+    <p>
+        Before a sequence runs, we tell the game that a sequence is about to run by setting the '<i>Game.isInCutscene</i>' boolean to True.
+        This allows us to prevent certain actions from happening during longer Sequences, and it allows us to add Invisible Walls in certain areas
+        to prevent players from getting lost.
+    </p>
+</td>
+</tr>
+</table>
+
+
+    <p>
+        Once the pre-run logic is done, an <strong>Animator</strong> attached to the <strong>SequenceObject</strong> runs an <strong>Animation Clip</strong> defined in advance. This animation clip runs
+        various <strong>Triggers</strong> and <strong>Functions</strong> used to run Cutscenes, dictate NPC Behaviors, and other things listed lower on this page.
+    </p>
+    <p>
+        As soon as the animation comes to an end, we make sure that the Player has been given back its ability to <strong>Move</strong> and to <strong>Look Around</strong>, as Sequences
+        may remove both of those abilities if necessary. We then set '<i>Game.isInCutscene</i>' back to False to tell the game that the Sequence is done, and we <strong>Destroy</strong> the GameObject holding the SequenceObject to not leave
+        unnecessary objects lingering in the Game Scene.
+    </p>
+
+</div>
+</div>
+</div>
+
+<div class = "block">
+<div class="text_block">
+
+<div class="text_title">
+<strong>SEQUENCE OBJECT:</strong> Events & Calls
+</div>
+
+<div class="text_intro">
+
+    <p>
+        During a sequence, multiple Functions are called to execute cetains actions with precise definable timings.
+        Those Functions are called during the '<strong>RUN VARIOUS TRIGGERS AND FUNCTIONS</strong>' loop on the previous Diagram just above.
+    </p>
+    <p>
+        Here is a complete list of every Action that can be executed by a <strong>SequenceObject</strong> during its lifecycle:
+    </p>
+    <ul>
+        <li><strong>SET CAMERA CONTROL</strong></li> Used to allow or disallow players to Move and Look Around.
+        <li><strong>SET PLAYER POSITION</strong></li> Moves the player to a predefined position using a TRANSFORM present in the level.
+        <li><strong>START ANIMATOR SEQUENCE</strong></li> Forces a defined Animator to play a specific Animation Clip.
+        <li><strong>SET DIALOGUE</strong></li> Defines the Dialogue Object that gets used for this specific Sequence. This function MUST be ran before any dialogue is called, as it contains every line that needs to be said.
+        <li><strong>SET DIALOGUE ENTRY</strong></li> Runs a specific line from a Dialogue Object, plays a Sound to go with it, and places Subtitles on the screen.
+        <li><strong>SET TRIGGER</strong></li> Runs a TRIGGER Object manually. Said trigger must be set to the "On Sequence" trigger type for it to be called by a SequenceObject.
+        <li><strong>SET OBJECTIVE</strong></li> Changes the current objective of the player, and makes it appear on the screen.
+        <li><strong>SET PROGRESSION</strong></li> Writes a Progression Flag in the Save Data.
+        <li><strong>SET CONTROL PROMPT</strong></li> Prompts the player to do an action in game, e.g. pressing a key.
+        <li><strong>PLAY SOUND</strong></li> Plays a sound from a SoundElement.
+    </ul>
+
+</div>
+</div>
+</div>
+
+<div class = "block">
+<div class="text_block">
+
+<div class="text_title">
+<strong>SEQUENCE OBJECT & TRIGGERS:</strong> Modularity and Accessibility
+</div>
+
+<div class="text_intro">
+    <p>
+        Each and every system used to progress Game Sequences and to dictate the actions of interactive elements around the player are simple by Design, 
+        as they were made to be extremely modular and easy to pick up in the long run, even by someone who isn't used to Programming.
+    </p>
+<table class="diagram">
+<tr>
+<td class="diagram">
+<center>
+<img class="diagram" style="width: 75%" src="images/TriggerList.png" alt="SequenceObject Diagram" width=auto height=auto>
+</center>
+</td>
+<td class="diagram">
+    <p>
+        Each individual Trigger class only took a few minutes at most to be written; most of the work was already handled instantiated
+        inside of the TriggerBase parent class, and I only had to make each variant inherit it and write their final "TRIGGER" method.
+    </p>
+    <p>
+        In certain cases, the Functions I needed already existed in other systems and scripts, allowing me to simply call those instead without
+        even requiring any extra work from me.
+    </p>
+    <p>
+        These choices let me easily create a ton of new Trigger types without losing any time, even during the Implementation phase of our game
+        depending on the wants and needs of the rest of the team.
+    </p>
+</td>
+</tr>
+</table>
+
+
+    <p>
+        In the case of <strong>SequenceObjects</strong>, everything is contained within the SequenceObject Script itself, which only needs to be called inside of a <strong>PREFAB</strong>. 
+    </p>
+    <p>
+        The creation of new sequences is thus <strong>trivial</strong> from a technical stand point and accessible to every member of our team, as it only requires us to create AnimationClips.
+    </p>
+
+</div>
+</div>
+</div>
+
+<div class="block">
+
+<div class="text_block">
+<div class="text_title">
+<center><strong>THAT'S IT!</strong></center>
+</div>
+<div class="text_intro">
+
+    <center>
+<p>
+    Thank you for reading all the way through!<br>
+    <strong>Click</strong> the link below to go back to the <strong>HOME</strong> Page.
+</p>
+
+    <a style="font-size: 24px;" href="https://offzephyr.github.io/EmergencyCallPortfolio"><u>GO BACK TO HOME PAGE</u></a>
+    </center>
+</div>
+</div>
+</div>
+
+<div class="header_block">
+<div class="text_block">
+
+<div class="text_title">
+<center><strong>CONTACTS</strong></center>
+</div>
+
+</div>
+</div>
+
+</body>
+
+<style>
+   body {
+        background-color: rgb(5, 1, 23);
+        padding: 0;
+        margin: 0;
+    }
+    .header-1 {
+        border-radius: 50px; 
+        margin: 10px 15%;
+    }
+    .header_link {
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        color: #ff7b64;
+        font-size: 24px;
+        margin: 0 0 0 30px;
+        padding: 0 0 0 0;
+    }
+    .header_link:hover {
+        text-align: justify;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        color: #ffffff;
+        font-size: 24px;
+        margin: 0 0 0 30px;
+        padding: 0 0 0 0;
+    }
+    .logo_top {
+        display: block;
+        padding: 0 -40px;
+    }
+    .text_top {
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+    .text_top_line1 {
+        color:orange;
+        font-size:36px;
+        margin: 0 0 0px 30px;
+    }
+    .text_top_line2 {
+        color:red;
+        font-size:25px;
+        margin: 0 0 20px 30px;
+    }
+
+    .text_title {
+        font-size: 24px;
+        padding: 0 0 20px 0;
+        margin: -20px 0 0 0
+    }
+    .text_intro {
+        font-size: 18px;
+    }
+    .image_block {
+        background-image: url(images/background.png);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+    }
+    .image_block_color {
+        background-color: #0603127e;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+        padding: 25px 0;
+    }
+    .block {
+        padding: 25px 0;
+    }
+    .header_block {
+        margin: 0;
+        background-color: #151221;
+    }
+    .text_block {
+        text-align: justify;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        color: #ff7b64;
+        font-size: 12px;
+        padding: 50px 5%;
+        margin: 0 15% 0 15%;
+        background-color: #151221cb;
+        border-radius: 50px;
+        line-height: 1.3;
+    }
+    .diagram {
+
+        border-radius: 25px;
+        vertical-align: top;
+        table-layout: fixed;
+        width: 100%;
+        text-align: justify;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        color: #ff7b64;
+        font-size: 18px;
+        line-height: 1.3;
+        padding: 0 2%;
+    }
+    strong{
+        color: #ffc061;
+    }
+    a{
+        color: #ffc061;
+    }
+    a:hover{
+        color: #ffffff;
+    }
+</style>
