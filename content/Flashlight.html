@@ -90,7 +90,7 @@ This is our Key Feature, the Player's best tool for visibility, and its only way
 <div class="text_block">
 
 <div class="text_title">
-<strong>SEQUENCE OBJECT:</strong> Lifecycle
+<strong>FLASHLIGHT:</strong> Flash Beacon
 </div>
 
 <div class="text_intro">
@@ -103,104 +103,21 @@ This is our Key Feature, the Player's best tool for visibility, and its only way
 </td>
 <td class="diagram">
     <p>
-        <strong>Dialogues</strong>, <strong>Cutscenes</strong>, NPC Actions, object <strong>Animations</strong>, environmental changes, and every other scripted parts of our game go through this Logic Loop.
+        With enough battery in your Flashlight, holding <strong>SPACE</strong> lets you charge up a <strong>FLASH</strong>.
     </p>
     <p>
-        This system allows us precise control over the length and timings of every game sequence thanks to my use of <strong>Animation Clips</strong> and <strong>Animators</strong> to handle our <strong>Sequences</strong>.
-        This choice lets us create and add new sequences to the game in an <strong>INTUITIVE</strong> and <strong>EFFICIENT</strong> way. 
+        This is your unique defense against the monsters roaming the halls of our game.
     </p>
     <p>
-        The logic loop present here resides in <strong>PREFAB</strong> Objects that are instantiated when needed.
+        Holding the FLASH key charges up a flash, but letting go too early <strong>prevents it from firing</strong>, making it charge back down.
     </p>
 
     <p>
-        Before a sequence runs, we tell the game that a sequence is about to run by setting the '<i>Game.isInCutscene</i>' boolean to True.
-        This allows us to prevent certain actions from happening during longer Sequences, and it allows us to add Invisible Walls in certain areas
-        to prevent players from getting lost.
-    </p>
-</td>
-</tr>
-</table>
-
-
-    <p>
-        Once the pre-run logic is done, an <strong>Animator</strong> attached to the <strong>SequenceObject</strong> runs an <strong>Animation Clip</strong> defined in advance. This animation clip runs
-        various <strong>Triggers</strong> and <strong>Functions</strong> used to run Cutscenes, dictate NPC Behaviors, and other things listed lower on this page.
+        <strong>Charging up</strong> a flash <strong>reduces the intensity</strong> of the flashlight by a LOT, and plays an animation to emphasize the fact that it is currently charging an attack.
     </p>
     <p>
-        As soon as the animation comes to an end, we make sure that the Player has been given back its ability to <strong>Move</strong> and to <strong>Look Around</strong>, as Sequences
-        may remove both of those abilities if necessary. We then set '<i>Game.isInCutscene</i>' back to False to tell the game that the Sequence is done, and we <strong>Destroy</strong> the GameObject holding the SequenceObject to not leave
-        unnecessary objects lingering in the Game Scene.
-    </p>
-
-</div>
-</div>
-</div>
-
-<div class = "block">
-<div class="text_block">
-
-<div class="text_title">
-<strong>SEQUENCE OBJECT:</strong> Events & Calls
-</div>
-
-<div class="text_intro">
-
-    <p>
-        During a sequence, multiple Functions are called to execute cetains actions with precise definable timings.
-        Those Functions are called during the '<strong>RUN VARIOUS TRIGGERS AND FUNCTIONS</strong>' loop on the previous Diagram just above.
-    </p>
-    <p>
-        Here is a complete list of every Action that can be executed by a <strong>SequenceObject</strong> during its lifecycle:
-    </p>
-    <ul>
-        <li><strong>SET CAMERA CONTROL</strong></li> Used to allow or disallow players to Move and Look Around.
-        <li><strong>SET PLAYER POSITION</strong></li> Moves the player to a predefined position using a TRANSFORM present in the level.
-        <li><strong>START ANIMATOR SEQUENCE</strong></li> Forces a defined Animator to play a specific Animation Clip.
-        <li><strong>SET DIALOGUE</strong></li> Defines the Dialogue Object that gets used for this specific Sequence. This function MUST be ran before any dialogue is called, as it contains every line that needs to be said.
-        <li><strong>SET DIALOGUE ENTRY</strong></li> Runs a specific line from a Dialogue Object, plays a Sound to go with it, and places Subtitles on the screen.
-        <li><strong>SET TRIGGER</strong></li> Runs a TRIGGER Object manually. Said trigger must be set to the "On Sequence" trigger type for it to be called by a SequenceObject.
-        <li><strong>SET OBJECTIVE</strong></li> Changes the current objective of the player, and makes it appear on the screen.
-        <li><strong>SET PROGRESSION</strong></li> Writes a Progression Flag in the Save Data.
-        <li><strong>SET CONTROL PROMPT</strong></li> Prompts the player to do an action in game, e.g. pressing a key.
-        <li><strong>PLAY SOUND</strong></li> Plays a sound from a SoundElement.
-    </ul>
-
-</div>
-</div>
-</div>
-
-<div class = "block">
-<div class="text_block">
-
-<div class="text_title">
-<strong>SEQUENCE OBJECT & TRIGGERS:</strong> Modularity and Accessibility
-</div>
-
-<div class="text_intro">
-    <p>
-        Each and every system used to progress Game Sequences and to dictate the actions of interactive elements around the player are simple by Design, 
-        as they were made to be extremely modular and easy to pick up in the long run, even by someone who isn't used to Programming.
-    </p>
-<table class="diagram">
-<tr>
-<td class="diagram">
-<center>
-<img class="diagram" style="width: 75%" src="images/TriggerList.png" alt="SequenceObject Diagram" width=auto height=auto>
-</center>
-</td>
-<td class="diagram">
-    <p>
-        Each individual Trigger class only took a few minutes at most to be written; most of the work was already handled instantiated
-        inside of the TriggerBase parent class, and I only had to make each variant inherit it and write their final "TRIGGER" method.
-    </p>
-    <p>
-        In certain cases, the Functions I needed already existed in other systems and scripts, allowing me to simply call those instead without
-        even requiring any extra work from me.
-    </p>
-    <p>
-        These choices let me easily create a ton of new Trigger types without losing any time, even during the Implementation phase of our game
-        depending on the wants and needs of the rest of the team.
+        <strong>Releasing</strong> the KEY after <strong>charging</strong> a FLASH for <strong>long enough</strong> will let out a <strong>MASSIVE BURST OF LIGHT</strong> from your flashlight.
+        This burst pushes away smaller enemies, and stuns larger ones. <i>Unfortunately</i>, releasing a FLASH<strong> drains</strong> the <strong>entirety of your Battery</strong>, leaving the Player <strong>vulnerable</strong> and <strong>unable to see</strong>.
     </p>
 </td>
 </tr>
@@ -208,10 +125,7 @@ This is our Key Feature, the Player's best tool for visibility, and its only way
 
 
     <p>
-        In the case of <strong>SequenceObjects</strong>, everything is contained within the SequenceObject Script itself, which only needs to be called inside of a <strong>PREFAB</strong>. 
-    </p>
-    <p>
-        The creation of new sequences is thus <strong>trivial</strong> from a technical stand point and accessible to every member of our team, as it only requires us to create AnimationClips.
+        Each enemy has a <strong>different reaction</strong> to being <strong>flashed</strong>, defined by their 'OnFlashed' Function, overriden directly from a common parent MonsterController script.
     </p>
 
 </div>
