@@ -38,7 +38,65 @@
 </div>
 
 <div class="text_intro">
-[TO BE WRITTEN]
+Each enemy type uses the same core logic, and adds onto it depending on its specific behavior and characteristics.
+</div>
+</div>
+</div>
+
+<div class = "block">
+<div class="text_block">
+
+<div class="text_title">
+<strong>MONSTER:</strong> Parent Controller
+</div>
+
+<div class="text_intro">
+<table class="diagram">
+<tr>
+<td class="diagram">
+<center>
+<img class="diagram" src="diagrams/sequences/trigger.png" alt="Trigger Activation Diagram" width=auto height=auto>
+</center>
+</td>
+<td class="diagram">
+    <p>
+        Every trigger in the game inherits this loop.
+    </p>
+    <p>
+        Each trigger in game can be given an undefined amount of  <strong>FLAGS</strong> and <strong>CONDITIONS</strong> that need to be met before it is allowed to fire.
+    </p>
+    <p>
+        Here, we start by verifying that every required <strong>FLAG</strong> and <strong>CONDITION</strong> is met. Then, we check if the  <strong>TRIGGER TYPE</strong> matches the way we are attempting to Trigger it.
+    </p>
+
+    <p>
+        The possible types are:
+        <strong>
+        <ul>
+        <li> On Start </li>
+        <li> On Collision Enter </li>
+        <li> On Enabled </li>
+        <li> On Sequence </li>
+        </ul>
+        </strong>
+    </p>
+
+    <p>
+        For the last Type, Triggers can be given a <strong>KEY</strong> <i>(string)</i> used by <strong>SequenceObjects</strong> to activate Triggers manually.
+        <br> Triggers can also Instantiate SequenceObjects, allowing for the creation of Chained Sequences.
+    </p>
+</td>
+</tr>
+</table>
+
+
+    <p>
+        After all of this, we verify if the trigger is set to "Only Trigger Once". If so, we also check if it was already triggered.
+    </p>
+    <p>
+        Once <i>all</i> of those checks are passed, we write potential <strong>PROGRESSION FLAGS</strong> into the Save Data, we mark the Trigger as "Triggered", and only then do we run the main <strong>Trigger</strong> Function.
+    </p>
+
 </div>
 </div>
 </div>
@@ -62,14 +120,33 @@
 </div>
 </div>
 </div>
-
 <div class="header_block">
 <div class="text_block">
 
+<div class="text_intro">
+<table class="diagram">
+    <tr>
+        <td class="diagram">
+            <p>
 <div class="text_title">
 <center><strong>CONTACTS</strong></center>
 </div>
-
+                <strong>EMAIL: </strong>notte.gabriel@gmail.com<br>
+                <strong>PHONE: </strong>0493 18 36 61<br>
+            </p>
+        </td>
+        <td class="diagram">
+            <p>
+<div class="text_title">
+<center><strong>LINKS</strong></center>
+</div>
+                <strong><u><a href="https://github.com/OffZephyr">GITHUB</a></u></strong><br>
+                <strong><u><a href="https://github.com/OffZephyr/EmergencyCallPortfolio">PAGE SOURCE</a></u></strong><br>
+            </p>
+        </td>
+    </tr>
+</table>
+</div>
 </div>
 </div>
 
