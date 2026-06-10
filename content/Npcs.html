@@ -1,0 +1,304 @@
+
+<div class="header_block">
+<div class="header-1">
+<table>
+<tr>
+<td>
+
+<center>
+<img class="logo_top" src="images/logo.png" alt="Logo" width="200" height=auto>
+</center>
+
+</td>
+<td class = "text_top">
+
+<p class = "text_top_line1">
+<strong>"YOU CALLED, WE ANSWERED!</strong>
+</p>
+
+<p class = "text_top_line2">
+<i>BUT... MAYBE WE SHOULDN'T HAVE..."</i>
+</p>
+
+<p>
+<a href="https://offzephyr.github.io/EmergencyCallPortfolio" class="header_link">GABRIEL NOTTE - 'Emergency Call' PORTFOLIO</a>
+</p>
+
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div class = "block">
+<div class="text_block">
+
+<div class="text_title">
+<center><strong>NPCs and NARRATION</strong></center>
+</div>
+
+<div class="text_intro">
+This page contains explainations for all of the logic for our <strong>NPCs</strong>, <strong>Dialogue System</strong>, <strong>Subtitles</strong> and other <strong>Prompts</strong> that may be given to the player.
+</div>
+</div>
+</div>
+
+<div class = "block">
+<div class="text_block">
+
+<div class="text_title">
+<strong>NPC CHARACTERS:</strong> Behavior
+</div>
+
+<div class="text_intro">
+<table class="diagram">
+<tr>
+<td class="diagram">
+<center>
+<img style="width:75%; margin-left: -100px;" class="diagram" src="diagrams/sequences/npc_class.png" alt="SequenceObject Diagram" width=auto height=auto>
+</center>
+</td>
+<td class="diagram">
+<center>
+<img style="width:125%; margin-left: -100px;" class="diagram" src="diagrams/sequences/npc_behavior_use_cases.png" alt="SequenceObject Diagram" width=auto height=auto>
+</center>
+</td>
+</table>
+
+    <p>
+        <strong>NPC BEHAVIORS</strong> are all defined by <strong>SequenceObjects</strong>, and only during or after <strong>scripted sequences</strong>. <strong>OUTSIDE</strong> of scripted sequences,
+        NPCs will stick to whatever <strong>task</strong> was given to them <strong>last</strong> (Mutually Inclusive: e.g. <i>standing still where they currently are, walking or running to a specific location, looking at a specific location, following the player, etc.</i>).
+    </p>
+    <p>
+        <strong>Without</strong> the use of <strong>SequenceObjects</strong>, <strong>NPCs</strong> will <strong>never stray off course</strong>, and will always stick to whatever they are currently doing.
+    </p>
+    <p>
+        <strong>NPCs</strong> also inherit the same '<strong>CharacterHandler</strong>' parent class as the <strong>Player</strong> character, used to animate <strong>head angles</strong>, <strong>walk/run cycles</strong> and other <strong>movements</strong> they have in common.
+    </p>
+
+</div>
+</div>
+</div>
+
+<div class = "block">
+<div class="text_block">
+
+<div class="text_title">
+<strong>DIALOGUES:</strong> Scriptable Object
+</div>
+
+<div class="text_intro">
+<table class="diagram">
+<tr>
+<td class="diagram">
+<center>
+<img class="diagram" src="diagrams/sequences/DialogueElement.png" alt="DialogueElement Class Diagram" width=auto height=auto>
+</center>
+</td>
+<td class="diagram">
+    <p>
+        This here is the <strong>Class Diagram</strong> showing our <strong>DialogueElement</strong> Scriptable Object.
+    </p>
+    <p>
+        This object was made to be as <strong>simple</strong> as it could possibly be, allowing <strong>anyone</strong> on the team to write the <strong>dialogues</strong> for an entire <strong>Cutscene</strong> or <strong>Sequence</strong>.
+    </p>
+    <p>
+        At this core, this object is a big list containing each line of dialogue. Each line is composed of 4 elements:<br>
+        <ul>
+            <li><strong>NAME</strong> ("character") <strong>:</strong><br>The character's name, also used to find the NPC talking and make it play an animation.</li>
+            <li><strong>DIALOGUE LINE</strong> ("text") <strong>:</strong><br>The written subtitle for this line of dialogue that appears on the player's screen</li>
+            <li><strong>SUB LINE</strong> ("subText") <strong>:</strong><br>A second layer of text, used when monsters are speaking</li>
+            <li><strong>VOICE</strong> ("voice") <strong>:</strong><br>A sound effect, played when the line appears on the Player's screen</li>
+        </ul>
+    </p>
+</td>
+</tr>
+</table>
+
+
+    <p>
+        These objects are then called at the <strong>start</strong> of a <strong>sequence</strong> containing dialogue. <strong>Sequences</strong> go down the list in order, using <strong>events</strong> placed by hand inside of the <strong>AnimationClip</strong> they run for precise timing.
+    </p>
+
+</div>
+</div>
+</div>
+
+<div class = "block">
+<div class="text_block">
+
+<div class="text_title">
+<strong>HUD:</strong> Dialogues & Action Prompts
+</div>
+
+<div class="text_intro">
+<table class="diagram">
+<tr>
+<td class="diagram">
+<center>
+<img class="diagram" src="diagrams/sequences/dialogueHud_activity.png" alt="DialogueElement Class Diagram" width=auto height=auto>
+</center>
+</td>
+<td class="diagram">
+    <p>
+        Both <strong>Dialogues</strong> and <strong>Control Prompts</strong> are triggered manually, though <strong>Dialogues</strong> can only be triggered by <strong>SequenceObjects</strong>,
+        while <strong>Control Prompts</strong> are triggered at <strong>any time</strong> if they are needed.
+    </p>
+    <p>
+        Both work in similar ways, as they are both called from the same place. We just need to call the function and give it the right variables (a <strong>DialogueElement</strong> in the case of dialogues,
+        and a <strong>string</strong> for Prompts).
+    <p>
+        The <strong>HUD</strong> script will then play the corresponding <strong>animation</strong> to make the text <strong>appear on the player's screen</strong>, and make it disappear when the right
+        conditions are met.<br><br>
+        Only <strong>one</strong> DialogueElement and <strong>one</strong> Prompt can be <strong>active at once</strong> on the player's screen.
+    </p>
+    <p>
+        The text will then <strong>clear itself</strong> on its own once it isn't needed anymore.
+    </p>
+</td>
+</tr>
+</table>
+
+</div>
+</div>
+</div>
+
+<div class="block">
+
+<div class="text_block">
+<div class="text_title">
+<center><strong>THAT'S IT!</strong></center>
+</div>
+<div class="text_intro">
+
+    <center>
+<p>
+    Thank you for reading all the way through!<br>
+    <strong>Click</strong> the link below to go back to the <strong>HOME</strong> Page.
+</p>
+
+    <a style="font-size: 24px;" href="https://offzephyr.github.io/EmergencyCallPortfolio"><u>GO BACK TO HOME PAGE</u></a>
+    </center>
+</div>
+</div>
+</div>
+
+<div class="header_block">
+<div class="text_block">
+
+<div class="text_title">
+<center><strong>CONTACTS</strong></center>
+</div>
+
+</div>
+</div>
+
+</body>
+
+<style>
+   body {
+        background-color: rgb(5, 1, 23);
+        padding: 0;
+        margin: 0;
+    }
+    .header-1 {
+        border-radius: 50px; 
+        margin: 10px 15%;
+    }
+    .header_link {
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        color: #ff7b64;
+        font-size: 24px;
+        margin: 0 0 0 30px;
+        padding: 0 0 0 0;
+    }
+    .header_link:hover {
+        text-align: justify;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        color: #ffffff;
+        font-size: 24px;
+        margin: 0 0 0 30px;
+        padding: 0 0 0 0;
+    }
+    .logo_top {
+        display: block;
+        padding: 0 -40px;
+    }
+    .text_top {
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+    .text_top_line1 {
+        color:orange;
+        font-size:36px;
+        margin: 0 0 0px 30px;
+    }
+    .text_top_line2 {
+        color:red;
+        font-size:25px;
+        margin: 0 0 20px 30px;
+    }
+
+    .text_title {
+        font-size: 24px;
+        padding: 0 0 20px 0;
+        margin: -20px 0 0 0
+    }
+    .text_intro {
+        font-size: 18px;
+    }
+    .image_block {
+        background-image: url(images/background.png);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+    }
+    .image_block_color {
+        background-color: #0603127e;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+        padding: 25px 0;
+    }
+    .block {
+        padding: 25px 0;
+    }
+    .header_block {
+        margin: 0;
+        background-color: #151221;
+    }
+    .text_block {
+        text-align: justify;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        color: #ff7b64;
+        font-size: 12px;
+        padding: 50px 5%;
+        margin: 0 15% 0 15%;
+        background-color: #151221cb;
+        border-radius: 50px;
+        line-height: 1.3;
+    }
+    .diagram {
+
+        border-radius: 25px;
+        vertical-align: top;
+        table-layout: fixed;
+        width: 100%;
+        text-align: justify;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        color: #ff7b64;
+        font-size: 18px;
+        line-height: 1.3;
+        padding: 0 2%;
+    }
+    strong{
+        color: #ffc061;
+    }
+    a{
+        color: #ffc061;
+    }
+    a:hover{
+        color: #ffffff;
+    }
+</style>
