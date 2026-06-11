@@ -38,7 +38,77 @@
 </div>
 
 <div class="text_intro">
-[TO BE WRITTEN]
+This system was made for us to be <strong>easily</strong> usable inside of any script, allowing our Sound Designer to implement sounds on their own without the need of a Programmer.
+</div>
+</div>
+</div>
+
+<div class = "block">
+<div class="text_block">
+
+<div class="text_title">
+<strong>SOUND SYSTEM:</strong> SoundElement
+</div>
+
+<div class="text_intro">
+<table class="diagram">
+<tr>
+<td class="diagram">
+<center>
+<img class="diagram" src="diagrams/sound/soundelement.png" alt="SoundElement Diagram" width=auto height=auto>
+</center>
+</td>
+<td class="diagram">
+    <p>
+        The <strong>SoundElement</strong> ScriptableObject is the <strong>core</strong> of our <strong>Sound System</strong>.
+    </p>
+    <p>
+        A <strong></strong>SoundElement is an <strong>object</strong> used to create <strong>reusable instances of audio clips</strong>, with a complete set of <strong>configurable settings</strong>, as well as <strong>directives</strong> on <strong>how it should play</strong> in the level.
+    </p>
+    <p>
+        Any <strong>moving object</strong> using this system needs to have a <strong>SoundPlayer</strong> component attached, used to hold a '<strong>Key</strong>' string. This <strong>key</strong> is used to <strong>attach</strong> the <strong>Sound Instance</strong> to the <strong>moving audio source</strong>.
+    </p>
+    <p>
+        <strong>SoundInstance</strong> objects are created every time a <strong>sound is played</strong>. They hold an <strong>Audio Source</strong> component, and are used to give the right <strong>settings</strong> and <strong>variables</strong>
+        to that Audio Source. They are also used to <strong>destroy</strong> the Audio Source once the <strong>sound</strong> is <strong>done</strong> playing.
+    </p>
+</td>
+</tr>
+</table>
+
+</div>
+</div>
+</div>
+
+<div class = "block">
+<div class="text_block">
+
+<div class="text_title">
+<strong>SOUND SYSTEM:</strong> Play a sound
+</div>
+
+<div class="text_intro">
+<center>
+<img style="width: 75%;" class="diagram" src="diagrams/sound/playsound.png" alt="Playsound Diagram" width=auto height=auto>
+</center>
+
+<p>
+    Playing a sound is <strong>quite trivial</strong> as it can be done from <strong>anywhere</strong> and at <strong>any time</strong>, only requiring the use of a <strong>single Function</strong>.
+</p>
+<p>
+    We just need to call '<strong>PlaySound</strong>' and give it a <strong>SoundElement</strong> and an <strong>optional Transform</strong> as the only parameters.
+</p>
+<p>
+    Once the function is called, we look for a potential '<strong>SoundPlayer</strong>' audio source. If one is found, the '<strong>SoundInstance</strong>' will be set as a <strong>child of the source object</strong>. Otherwise, it will fall back to the <strong>Transform parameter</strong>.
+    If no Transform is given either, the sound will attach to <strong>the player's camera</strong>.
+</p>
+<p>
+    Once the <strong>source</strong> and <strong>position</strong> are found, a <strong>SoundInstance</strong> object is instantiated. The object then takes care of the rest, it <strong>plays the sound</strong> with the <strong>given parameters</strong>, and it <strong>destroys</strong> itself once finished.
+</p>
+<p>
+    This process can be used <strong>as many times as needed</strong>, and can <strong>overlap</strong> with <strong>no issues</strong>.
+</p>
+
 </div>
 </div>
 </div>
