@@ -38,7 +38,83 @@
 </div>
 
 <div class="text_intro">
-[TO BE WRITTEN]
+This page describes all of the <strong>post processing</strong> that was done by me for the game. Since we went for a <strong>PSX</strong> artstyle, this was an important step towards making our game fit the aesthetic.
+</div>
+</div>
+</div>
+
+<div class = "block">
+<div class="text_block">
+
+<div class="text_title">
+<strong>SHADER:</strong> Lighting
+</div>
+
+<div class="text_intro">
+    <p>
+        As I have not had the <strong>courses</strong> required to be aware of all of the <strong>best practices</strong> when working with <strong>Shaders</strong>, I am aware that there may be many <strong>flaws</strong> with
+        the approach I took for this. Most of my knowledge on the matter is <strong>self taught</strong>, and I <strong>refused</strong> to rely on <strong>AI</strong> or <strong>Tutorials</strong>, opting instead for the use of <strong>online documentation</strong>
+        and pre-existing knowledge.
+    </p>
+    <p>
+        All of our shaders were made using unity's Shadergraph.
+    </p>
+
+<center>
+<img class="diagram" src="images/lighting.png" alt="lighting" width=auto height=auto>
+</center>
+
+
+    <p>
+        This shader is used for all of the lighting in our game.
+    </p>
+    <p>
+        We start with an Unlit shader.
+    </p>
+    <p>
+        We then <strong>recreate the world lighting ourselves</strong>, getting the <strong>required infos</strong> directly from <strong>Unity's lighting engine</strong>. 
+    </p>
+    <p>
+        Once we have access to shadows and lights, we can use the <strong>Dithering</strong> node to create this pixelated grid pattern between lights and shadows.
+    </p>
+    <p>
+        We can also use the <strong>Step</strong> node to <strong>limit</strong> the amount of <strong>colors</strong> and to <i>literally</i> reduce the amount of steps between fully bright areas and fully dark areas, creating '<strong>patches</strong>' of colors to replace gradiants.
+    </p>
+    <p>
+        We can then simply <strong>sample</strong> the base texture and multiply it with the <strong>lighting</strong> that was just made, as our game does not use other types of maps (e.g. Normals, Specular, etc).
+    </p>
+
+</div>
+</div>
+</div>
+
+<div class = "block">
+<div class="text_block">
+
+<div class="text_title">
+<strong>SHADER:</strong> Flesh
+</div>
+
+<div class="text_intro">
+<center>
+<img class="diagram" src="images/flesh.gif" alt="lighting" width=auto height=auto>
+</center>
+
+
+    <p>
+        This effect is a <strong>sub-element</strong> of the <strong>main shader</strong> used for our materials.
+    </p>
+    <p>
+        <strong>Any</strong> of our materials can be given a <strong>speed</strong>, <strong>intensity</strong> and <strong>noise scale</strong> for this '<strong>wiggling</strong>' effect.
+    </p>
+    <p>
+        However, we have only used this effect on <strong>Flesh</strong>, <strong>Guts</strong>, <strong>Sinew</strong> and <strong>other</strong> bodily materials in the context of our game.
+    </p>
+    <p>
+        It works by simply <strong>generating a Noise texture</strong>, using <strong>in game time</strong> to offset its UV, and using that paired with <strong>world positions</strong>
+        to <strong>offset</strong> the position of each <strong>vertice</strong> on the model being rendered.
+    </p>
+
 </div>
 </div>
 </div>
