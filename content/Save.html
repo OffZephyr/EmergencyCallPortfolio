@@ -38,7 +38,120 @@
 </div>
 
 <div class="text_intro">
-[TO BE WRITTEN]
+Our very simple take on a save system. This allowed us to run tests and to debug things very easily, making us able to ad a lot more content than we would've otherwise.
+</div>
+</div>
+</div>
+
+<div class = "block">
+<div class="text_block">
+
+<div class="text_title">
+<strong>SAVE MANAGER:</strong> Saving
+</div>
+
+<div class="text_intro">
+<table class="diagram">
+<tr>
+<td class="diagram" style="width: 75%;">
+<center>
+<img class="diagram" style="width:50%;" src="diagrams/save/save.png" alt="Flash Diagram" width=auto height=auto>
+</center>
+</td>
+<td class="diagram">
+    <p>
+        All of the <strong>Game Data</strong> is stored as <strong>pairs of 2 strings</strong>, a key and a value, inside of a <strong>Dictionary</strong>. 
+    </p>
+    <p>
+        The Game Data is saved every time the player reaches a checkpoint.
+    </p>
+    <p>
+        If the player isn't on the <strong>Title</strong> screen, a <strong>save icon</strong> appears every time the save function is ran.
+    </p>
+    <p>
+        To save the game, we take <strong>everything</strong> inside of the <strong>Game Data Dictionary</strong>, we turn it into a <strong>JSON</strong> file, and we write it into a file at Unity's integrated
+        '<strong>persistent data</strong>' file location.
+    </p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+
+<div class = "block">
+<div class="text_block">
+
+<div class="text_title">
+<strong>SAVE MANAGER:</strong> Loading
+</div>
+
+<div class="text_intro">
+<table class="diagram">
+<tr>
+<td class="diagram" style="width: 75%;">
+<center>
+<img class="diagram" src="diagrams/save/load.png" alt="Flash Diagram" width=auto height=auto>
+</center>
+</td>
+<td class="diagram">
+    <p>
+        This function is ran as soon as the <strong>game is loaded</strong>, as a way to retrieve the player's Game Settings.
+    </p>
+    <p>
+        We start by trying to <strong>retrieve</strong> the <strong>Save Data JSON file</strong>.
+    </p>
+    <p>
+        If the <strong>Save File</strong> doesn't already <strong></strong>exist, we create an empty one and fill it with <strong>Default Game Settings</strong>.
+    </p>
+    <p>
+        After retrieveing the <strong>Game Data</strong> from the  <strong>file</strong>, we convert it from a  <strong>JSON</strong> back into a  <strong>Dictionary</strong>.
+    </p>
+    <p>
+        Lastly, we <strong>apply</strong> the retrieved <strong>Game Settings</strong> to make sure that everything is ready to go.
+    </p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+
+<div class = "block">
+<div class="text_block">
+
+<div class="text_title">
+<strong>SAVE MANAGER:</strong> Persistent Data
+</div>
+
+<div class="text_intro">
+<table class="diagram">
+<tr>
+<td class="diagram" style="width: 75%;">
+<center>
+<img class="diagram" src="diagrams/save/use.png" alt="Flash Diagram" width=auto height=auto>
+</center>
+</td>
+<td class="diagram">
+    <p>
+        At any point, any script can <strong>Write</strong> or <strong>Retrieve</strong> Persistent Data <strong>easily</strong>.
+    </p>
+    <p>
+        This data can be used <strong>at any point</strong>, <strong>by any object</strong>, and <strong>for any purpose</strong>.
+    </p>
+    <p>
+        In the context of <strong>this game</strong>, it is <strong>currently used for</strong>:
+        <ul>
+            <li>Game Settings</li>
+            <li>Progression Flags</li>
+            <li>Persistent Conditions for events</li>
+            <li>Remembering the last Checkpoint reached</li>
+            <li>Remembering the last Objective</li>
+        </ul>
+    </p>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
