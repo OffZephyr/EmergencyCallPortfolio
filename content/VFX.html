@@ -39,6 +39,7 @@
 
 <div class="text_intro">
 This page describes all of the <strong>post processing</strong> that was done by me for the game. Since we went for a <strong>PSX</strong> artstyle, this was an important step towards making our game fit the aesthetic.
+All of our shaders were made using Unity's Shadergraph editor.
 </div>
 </div>
 </div>
@@ -55,9 +56,6 @@ This page describes all of the <strong>post processing</strong> that was done by
         As I have not had the <strong>courses</strong> required to be aware of all of the <strong>best practices</strong> when working with <strong>Shaders</strong>, I am aware that there may be many <strong>flaws</strong> with
         the approach I took for this. Most of my knowledge on the matter is <strong>self taught</strong>, and I <strong>refused</strong> to rely on <strong>AI</strong> or <strong>Tutorials</strong>, opting instead for the use of <strong>online documentation</strong>
         and pre-existing knowledge.
-    </p>
-    <p>
-        All of our shaders were made using unity's Shadergraph.
     </p>
 
 <center>
@@ -113,6 +111,34 @@ This page describes all of the <strong>post processing</strong> that was done by
     <p>
         It works by simply <strong>generating a Noise texture</strong>, using <strong>in game time</strong> to offset its UV, and using that paired with <strong>world positions</strong>
         to <strong>offset</strong> the position of each <strong>vertice</strong> on the model being rendered.
+    </p>
+
+</div>
+</div>
+</div>
+
+<div class = "block">
+<div class="text_block">
+
+<div class="text_title">
+<strong>POST PROCESSING:</strong> Health & Stamina Vignette
+</div>
+
+<div class="text_intro">
+<center>
+<img class="diagram" src="images/vignette.gif" alt="lighting" width=auto height=auto>
+</center>
+
+
+    <p>
+        This vignette effect uses a lot of the <strong>same elements</strong> as the flesh '<strong>wiggling</strong>' effect just above.
+    </p>
+    <p>
+        It uses a <strong>Generated Noise Texture</strong> for the wavy look, and <strong>fades</strong> itself to <strong>0 alpha</strong> towards the <strong>center</strong> of the screen. To achieve that, we just use the '<strong>Screen Position</strong>' node and use the <strong>distance</strong>
+        between each pixel and the center as an <strong>intensity</strong> value.
+    </p>
+    <p>
+        This effect is used to indicate the player's <strong>health</strong>, as well as the player's <strong>exhaustion</strong> while running.
     </p>
 
 </div>
